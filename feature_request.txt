@@ -1,7 +1,6 @@
 =========================================================================================================
 
-List features you want implemented below
-or you know... add them yourself
+List features you want implemented below. Or, you know... add them yourself (see contributing)
 
 1. Welcome message
 2. Upcoming events

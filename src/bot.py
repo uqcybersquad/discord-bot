@@ -9,6 +9,8 @@ SERVER_NAME = os.getenv('DISCORD_GUILD')
 
 client = discord.Client()
 
+
+
 @client.event
 async def on_ready():
 

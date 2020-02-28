@@ -9,17 +9,17 @@ SERVER_NAME = os.getenv('DISCORD_GUILD')
 
 client = discord.Client()
 
-print("API key is: " + os.getenv('DISCORD_TOKEN'))
-
 @client.event
 async def on_ready():
-	for i,guild in enumerate(client.guilds):
-		print("No:" + str(i) + "is: " + guild.name)
-		if guild.name == SERVER_NAME:
-			break
+
+	guild = client.guilds[0]
+
+	print(f'{client.user} is connected to: ' + f'{guild.name}')
 
 
-	print(f'{client.user} is connected to guild:' + f'{guild.name}')
+	members = '\n - '.join([member.name for member in guild.members])
+
+	print(f'Members:\n - {members}')
 
 
 client.run(API_KEY)

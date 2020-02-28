@@ -1,6 +1,7 @@
-===================================
+=========================================================================================================
 CONTRIBUTING
 
-If you would like to contribute to this bot, open a pull request and message an admin on Discord to review the changes
+If you would like to contribute to this bot, open a pull request and message an admin on Discord to 
+review the changes
 
-===================================
+=========================================================================================================

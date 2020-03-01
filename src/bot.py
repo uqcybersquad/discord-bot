@@ -12,13 +12,13 @@ SERVER_NAME = os.getenv('DISCORD_GUILD')
 client = discord.Client()
 mrRobot = commands.Bot(command_prefix="!")
 
-"""
+
 @client.event
 async def on_ready():
 
 	guild = client.guilds[0]
 
-	print(f'{client.user} is connected to: ' + f'{guild.name}')"""
+	print(f'{client.user} is connected to: ' + f'{guild.name}')
 
 
 @mrRobot.command(name="test")

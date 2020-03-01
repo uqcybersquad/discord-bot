@@ -12,37 +12,45 @@ load_dotenv()
 API_KEY = os.getenv('DISCORD_TOKEN')
 SERVER_NAME = os.getenv('DISCORD_GUILD')
 
-#client = discord.Client()
 mrRobot = commands.Bot(command_prefix='!')
 
-"""
-@client.event
+
+@mrRobot.event
 async def on_ready():
 
-	guild = client.guilds[0]
+	guild = mrRobot.guilds[0]
+	memberCount = len(guild.members)
+	onlineMemberCount = len([mem for mem in guild.members if mem.status == discord.Status.online])
 
-	print(f'{client.user} is connected to: ' + f'{guild.name}')"""
+	print(f'{mrRobot.user} is connected to: ' + f'{guild.name}')
+	print(f'There are {onlineMemberCount} of {memberCount} people online!')
 
 @mrRobot.command(name='base64')
-async def base64_enc_dec(ctx, opt : str, msg : str):
-	helpMsg = "You're using me wrong :(\nUsage: base64 -[e/d] message\n-d    - decode\n-e    - encode\n"
+async def base64_enc_dec(ctx, opt : str, msg = ""):
+	helpMsg = "You're using me wrong :(\nUsage: base64 -[e/d] message\n-d\t\tdecode\n-e\t\tencode\n"
 
-	if msg is None:
-		response = helpMsg
+	if opt in ["-e", "-d"] and msg is not "":
+		# Correct method request
+		if opt == "-e":
+			encoded = base64.b64encode(msg.encode('ascii'))
+			
+			response = encoded.decode("utf-8")
+			print(response)
 
-	if opt == "-e":
-		encoded = base64.b64encode(msg.encode('ascii'))
-		
-		response = encoded.decode("utf-8")
-		print(response)
+		elif opt == "-d":
+			decoded = base64.b64decode(msg.encode('ascii'))
 
-	elif opt == "-d" or opt is None:
-		decoded = base64.b64decode(msg.encode('ascii'))
+			response = decoded.decode("utf-8")
+
+	elif opt not in ["-e", "-d"] and msg == "":
+		# Default decode
+		decoded = base64.b64decode(opt.encode('ascii'))
 
 		response = decoded.decode("utf-8")
-
 	else:
+		# Incorrect usage
 		response = helpMsg
+
 
 	await ctx.send(response)
 
@@ -54,5 +62,4 @@ async def test_command(ctx):
 	await ctx.send(response)
 
 
-#client.run(API_KEY)
 mrRobot.run(API_KEY)

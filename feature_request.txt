@@ -8,6 +8,14 @@ List features you want implemented below. Or, you know... add them yourself (see
 Fun Stuff
 
 1. Mr Robot quote generator
-2. Base64 decoder
+2. brainfuck decoder/encoder
+3. Channel statistics
+
+=========================================================================================================
+
+
+Completed
+- Base64 decoder
+
 
 =========================================================================================================

@@ -5,4 +5,9 @@ List features you want implemented below. Or, you know... add them yourself (see
 1. Welcome message
 2. Upcoming events
 
+Fun Stuff
+
+1. Mr Robot quote generator
+2. Base64 decoder
+
 =========================================================================================================

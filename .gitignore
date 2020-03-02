@@ -1,2 +1,3 @@
 src/.env
 src/.env.txt
+src/__pycache__

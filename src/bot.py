@@ -25,11 +25,13 @@ async def on_ready():
 	print(f'{mrRobot.user} is connected to: ' + f'{guild.name}')
 	print(f'There are {onlineMemberCount} of {memberCount} people online!')
 
+
+
 @mrRobot.command(name='base64')
 async def base64_enc_dec(ctx, opt : str, msg = ""):
 	helpMsg = "You're using me wrong :(\nUsage: base64 -[e/d] message\n-d\t\tdecode\n-e\t\tencode\n"
 
-	if opt in ["-e", "-d"] and msg is not "":
+	if opt in ["-e", "-d"] and msg != "":
 		# Correct method request
 		if opt == "-e":
 			encoded = base64.b64encode(msg.encode('ascii'))

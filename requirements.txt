@@ -1,2 +1,5 @@
 discord.py
 python-dotenv
+base64
+os
+itertools

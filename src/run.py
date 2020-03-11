@@ -24,9 +24,8 @@ async def on_ready():
 
 	print(f'{mrRobot.user} is connected to: ' + f'{guild.name}')
 	print(f'There are {onlineMemberCount} of {memberCount} people online!')
-
-
-
+	
+	await client.change_presence(activity=discord.Game('Hacking'))
 
 
 

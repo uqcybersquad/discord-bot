@@ -21,13 +21,13 @@ quotes = cycle(['I believe in fate. There’s a reason we met. There’s somethi
 			"I’ve never found it hard to hack most people. If you listen to them, watch them, their vulnerabilities are like a neon sign.",
 			"When we lose our principles, we invite chaos."])
 
-class Quotes:
+class Quotes(commands.Cog):
 	def __init__(self, client):
 		self.client = client
-		
+
 	@tasks.loop(seconds=1200)
 	async def send_quote():
 		await client.channels.get(678944693152645135).send(next(quotes))
-	
+
 def setup(client):
 	client.add_cog(Quotes(client))

@@ -24,8 +24,8 @@ async def on_ready():
 
 	print(f'{mrRobot.user} is connected to: {guild.name}')
 	print(f'There are {onlineMemberCount} of {memberCount} people online!')
-	
-	await client.change_presence(activity=discord.Game('.help'))
+
+	await mrRobot.change_presence(activity=discord.Game('.help'))
 
 
 
@@ -35,10 +35,10 @@ async def test_command(ctx):
 
 	await ctx.send(response)
 
-	
+
 for filename in os.listdir('./commands'):
 	if filename.endswith('.py'):
 		mrRobot.load_extension(f'commands.{filename[:-3]}')
-		
+
 
 mrRobot.run(API_KEY)

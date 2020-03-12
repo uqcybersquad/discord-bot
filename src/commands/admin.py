@@ -5,29 +5,29 @@ class Admin(commands.Cog):
     def __init__(self, client):
 	    self.client = client
 
-    @commands.command()
+    @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
-    async def load(ctx, extension):
-	    mrRobot.load_extension(f'commands.{extension}')
+    async def load(self, ctx, extension):
+	    client.load_extension(f'commands.{extension}')
 
-    @commands.command()
+    @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
-    async def unload(ctx, extension):
-	    mrRobot.unload_extension(f'commands.{extension}')
+    async def unload(self, ctx, extension):
+	    client.unload_extension(f'commands.{extension}')
 
-    @commands.command()
+    @commands.command(hidden=True)
     @commands.has_permissions(kick_members=True)
-    async def kick(ctx, member : discord.Member, *, reason=None):
+    async def kick(self, ctx, member : discord.Member, *, reason=None):
         await member.kick(reason=reason)
 
-    @commands.command()
+    @commands.command(hidden=True)
     @commands.has_permissions(ban_members=True)
-    async def ban(ctx, member : discord.Member, *, reason=None):
+    async def ban(self, ctx, member : discord.Member, *, reason=None):
         await member.ban(reason=reason)
 
-    @commands.command()
+    @commands.command(hidden=True)
     @commands.has_permissions(ban_members=True)
-    async def unban(ctx, *, member):
+    async def unban(self, ctx, *, member):
         banned_users = await ctx.guild.bans()
         member_name, member_discriminator = member.split('#')
 

@@ -8,14 +8,14 @@ class Encodings(commands.Cog):
 	    self.client = client
 
 	@commands.command(name='base64')
-	async def base64_enc_dec(ctx, opt : str, msg = ""):
+	async def base64_enc_dec(self, ctx, opt : str, msg = ""):
 		helpMsg = "You're using me wrong :(\nUsage: base64 -[e/d] message\n-d\t\tdecode\n-e\t\tencode\n"
 
 		if opt in ["-e", "-d"] and msg != "":
 			# Correct method request
 			if opt == "-e":
 				encoded = base64.b64encode(msg.encode('ascii'))
-				
+
 				response = encoded.decode("utf-8")
 				print(response)
 
@@ -35,7 +35,7 @@ class Encodings(commands.Cog):
 
 
 		await ctx.send(response)
-		
-		
+
+
 def setup(client):
 	client.add_cog(Encodings(client))

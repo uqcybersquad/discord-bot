@@ -42,15 +42,26 @@ class Encodings(commands.Cog):
 			# Incorrect usage
 			response = helpMsg
 
-
 		await ctx.send(response)
 
 	@commands.command(name="rot13")
 	async def rot13_cipher(self, ctx, msg = ""):
-		helpMsg = "Usage: rot13 message\n"
+		helpMsg = "Usage: rot13 [message]\n"
 
 		if not msg:
-			ctx.send(helpMsg)
+			response = helpMsg
+			await ctx.send(response)
+		else:
+			await self.rotn_cipher(ctx, 13, msg)
+
+
+	@commands.command(name="rot")
+	async def rotn_cipher(self, ctx, n, msg = ""):
+		helpMsg = "Usage: rot [rotations] [message]\n"
+		n = int(n)
+
+		if not msg or n not in range(-27,27):
+			response = helpMsg
 		else:
 			response = ""
 
@@ -60,15 +71,14 @@ class Encodings(commands.Cog):
 					response += letter
 					continue
 
-				if letter == letter.toLower():
+				if letter.islower():
 					index = string.ascii_lowercase.index(letter)
-					response += string.ascii_lowercase[index % 26]
+					response += string.ascii_lowercase[(index + n)  % 26]
 				else:
 					index = string.ascii_uppercase.index(letter)
-					response += string.ascii_uppercase[index % 26]
+					response += string.ascii_uppercase[(index + n) % 26]
 			
-			ctx.send(response)
-				
+		await ctx.send(response)
 
 
 

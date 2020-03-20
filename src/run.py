@@ -1,10 +1,12 @@
 import os
+import base64
+
 from dotenv import load_dotenv
 
 import discord
 from discord.ext import commands
 
-import base64
+
 
 
 load_dotenv()
@@ -12,7 +14,11 @@ load_dotenv()
 API_KEY = os.getenv('DISCORD_TOKEN')
 SERVER_NAME = os.getenv('DISCORD_GUILD')
 
-mrRobot = commands.Bot(command_prefix='!')
+
+mrRobot = commands.Bot(
+	command_prefix='!',
+	activity=discord.Game(name="Commands: !help"),
+)
 
 
 @mrRobot.event
@@ -25,21 +31,14 @@ async def on_ready():
 	print(f'{mrRobot.user} is connected to: {guild.name}')
 	print(f'There are {onlineMemberCount} of {memberCount} people online!')
 
-	for filename in os.listdir('./commands'):
-		if filename.endswith('.py'):
-			mrRobot.load_extension(f'commands.{filename[:-3]}')
+	modules = [
+		"admin",
+		"encodings",
+		"quotes",	
+	]
 
-	await mrRobot.change_presence(activity=discord.Game('!help'))
-
-
-
-@mrRobot.command(name='test')
-async def test_command(ctx):
-	response = "This is a test message. :hellothere:"
-
-	await ctx.send(response)
-
-
+	for mod in modules:
+		mrRobot.load_extension("commands/" + mod + ".py")
 
 
 mrRobot.run(API_KEY)

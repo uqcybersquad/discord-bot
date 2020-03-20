@@ -8,12 +8,12 @@ class Admin(commands.Cog):
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def load(self, ctx, extension):
-	    client.load_extension(f'commands.{extension}')
+	    self.client.load_extension(f'commands.{extension}')
 
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def unload(self, ctx, extension):
-	    client.unload_extension(f'commands.{extension}')
+	    self.client.unload_extension(f'commands.{extension}')
 
     @commands.command(hidden=True)
     @commands.has_permissions(kick_members=True)

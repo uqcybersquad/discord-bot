@@ -10,12 +10,16 @@ Fun Stuff
 1. Mr Robot quote generator
 2. brainfuck decoder/encoder
 3. Channel statistics
+    - Online ppl
+    - Messages sent
+    - 
 
 =========================================================================================================
 
 
 Completed
 - Base64 decoder
+- rot13 decoder
 
 
 =========================================================================================================

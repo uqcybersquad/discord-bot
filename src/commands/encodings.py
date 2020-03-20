@@ -4,8 +4,8 @@ from discord.ext import commands
 import base64
 
 class Encodings(commands.Cog):
-	def __init__(self, client):
-	    self.client = client
+	def __init__(self, bot):
+	    self.bot = bot
 
 	@commands.command(name='base64')
 	async def base64_enc_dec(self, ctx, opt : str, msg = ""):
@@ -37,5 +37,5 @@ class Encodings(commands.Cog):
 		await ctx.send(response)
 
 
-def setup(client):
-	client.add_cog(Encodings(client))
+def setup(bot):
+	bot.add_cog(Encodings(bot))

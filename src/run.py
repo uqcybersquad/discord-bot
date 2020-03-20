@@ -38,7 +38,7 @@ async def on_ready():
 	]
 
 	for mod in modules:
-		mrRobot.load_extension("commands/" + mod + ".py")
+		mrRobot.load_extension(f"commands.{mod}.py")
 
 
 mrRobot.run(API_KEY)

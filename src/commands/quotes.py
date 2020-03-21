@@ -22,22 +22,22 @@ quotes = ['I believe in fate. There’s a reason we met. There’s something bet
 			"When we lose our principles, we invite chaos."]
 
 class Quotes(commands.Cog):
-	def __init__(self, bot):
-		self.bot = bot
+	def __init__(self, client):
+		self.client = client
 		self.send_quote.start()
 
 	@commands.command(name='quote')
 	async def random_quote(self, ctx):
 		await ctx.send(random.choice(quotes))
 
-	@tasks.loop(seconds=1800)
+	@tasks.loop(seconds=3600)
 	async def send_quote(self):
 		#print(next(quotes))
-		channel_id = self.bot.get_channel(687098371944874148)
+		channel_id = self.client.get_channel(678944693152645135)
 		await channel_id.send(random.choice(quotes))
 	#@commands.command()
 	#async def ping(self, ctx):
 	#	await ctx.send("Pong");
 
-def setup(bot):
-	bot.add_cog(Quotes(bot))
+def setup(client):
+	client.add_cog(Quotes(client))

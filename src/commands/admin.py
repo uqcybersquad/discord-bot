@@ -2,18 +2,18 @@ import discord
 from discord.ext import commands
 
 class Admin(commands.Cog):
-    def __init__(self, bot):
-	    self.bot = bot
+    def __init__(self, client):
+	    self.client = client
 
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def load(self, ctx, extension):
-	    self.bot.load_extension(f'commands.{extension}')
+	    client.load_extension(f'commands.{extension}')
 
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def unload(self, ctx, extension):
-	    self.bot.unload_extension(f'commands.{extension}')
+	    client.unload_extension(f'commands.{extension}')
 
     @commands.command(hidden=True)
     @commands.has_permissions(kick_members=True)
@@ -38,5 +38,5 @@ class Admin(commands.Cog):
                 await ctx.guild.unban(user)
                 return
 
-def setup(bot):
-    bot.add_cog(Admin(bot))
+def setup(client):
+    client.add_cog(Admin(client))

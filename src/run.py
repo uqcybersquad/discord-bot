@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
-
-
-
 load_dotenv()
 
 API_KEY = os.getenv('DISCORD_TOKEN')
@@ -33,7 +30,7 @@ async def on_ready():
 	modules = [
 		"admin",
 		"encodings",
-		"quotes",	
+		"quotes",
 	]
 
 	for mod in modules:

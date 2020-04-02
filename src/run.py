@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
-
-
-
 load_dotenv()
 
 API_KEY = os.getenv('DISCORD_TOKEN')
@@ -18,7 +15,6 @@ mrRobot = commands.Bot(
 	command_prefix='!',
 	activity=discord.Game(name="Commands: !help"),
 )
-
 
 @mrRobot.event
 async def on_ready():

@@ -3,6 +3,8 @@ from discord.ext import commands
 
 import base64
 import string
+from itertools import cycle
+import binascii
 
 class Encodings(commands.Cog):
 	def __init__(self, bot):
@@ -80,6 +82,19 @@ class Encodings(commands.Cog):
 			
 		await ctx.send(response)
 
+
+	@commands.command(name="xor")
+	async def xor_cipher(self, ctx, key="", msg=""):
+		helpMsg = "Usage: xor [key] [message]\n"
+		response = ""
+
+		if not msg or not key:
+			response = helpMsg
+		else:
+			decoded = ''.join(chr(ord(let) ^ ord(k)) for (let, k) in zip(msg, cycle(key)))
+			response = "str: {}\nhex: {}\n".format(decoded, binascii.hexlify(decoded.encode('utf8')).decode())
+
+		await ctx.send(response)
 
 
 def setup(bot):

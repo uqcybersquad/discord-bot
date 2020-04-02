@@ -2,3 +2,4 @@ src/.env
 src/.env.txt
 src/__pycache__
 src/botd.sh
+commands/__pycache__

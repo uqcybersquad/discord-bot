@@ -28,7 +28,7 @@ async def on_ready():
 
 	modules = [
 		"admin",
-		"encodings",
+		"crypto",
 		"quotes",
 		"courses",
 		"meta"

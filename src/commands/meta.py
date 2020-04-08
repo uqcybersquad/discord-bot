@@ -25,7 +25,8 @@ class Meta(commands.Cog):
     @commands.command(name="stats")
     async def get_discord_stats(self, ctx):
         msg = ""
-        guild = ctx.guild
+        
+        guild = self._bot.guilds[0]
 
         memberCount = len(guild.members)
         onlineMemberCount = len([mem for mem in guild.members if mem.status == discord.Status.online])

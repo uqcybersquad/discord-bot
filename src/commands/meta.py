@@ -14,6 +14,10 @@ class Meta(commands.Cog):
     """
     Send developers link to github channel
     """
-    @commands.command("link")
+    @commands.command(name="link")
     async def get_github_link(self, ctx):
         await ctx.send(GITHUB_LINK)
+
+
+def setup(bot):
+	bot.add_cog(Meta(bot))

@@ -29,7 +29,9 @@ async def on_ready():
 	modules = [
 		"admin",
 		"encodings",
-		"quotes",	
+		"quotes",
+		"courses",
+		"meta"
 	]
 
 	for mod in modules:

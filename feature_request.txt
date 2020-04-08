@@ -8,12 +8,20 @@ List features you want implemented below. Or, you know... add them yourself (see
 Fun Stuff
 
 1. Mr Robot quote generator
-2. brainfuck decoder/encoder
-3. Channel statistics
+2. Channel statistics
     - Online ppl
     - Messages sent
     - 
-4. Ping command
+3. Ping command
+4. Course info command
+
+===============================Course Info===============================
+
+!course [course_name]
+
+Course Name
+[Brief Intro]
+[Link to course info]
 
 =========================================================================================================
 

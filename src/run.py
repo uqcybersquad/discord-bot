@@ -31,7 +31,8 @@ async def on_ready():
 		"crypto",
 		"quotes",
 		"courses",
-		"meta"
+		"meta",
+		"competitions"
 	]
 
 	for mod in modules:

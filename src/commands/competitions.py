@@ -16,7 +16,11 @@ class Competitions(commands.Cog):
 
         waiting = self.hackasat_time - now_time
 
-        msg = f"There are {waiting.days} days, {waiting.seconds // (60 * 60) % 24} hours, {waiting.seconds // (60) % 60} minutes and {waiting.seconds % 60} seconds until launch!\n"
+        if waiting.seconds < 0:
+            msg = "Uhhhhh, you may have missed it...\n"
+        else:
+            msg = f"There are {waiting.days} days, {waiting.seconds // (60 * 60) % 24} hours, {waiting.seconds // (60) % 60} minutes and {waiting.seconds % 60} seconds until launch!\n"
+        
         await ctx.send(msg)
 
 def setup(bot):

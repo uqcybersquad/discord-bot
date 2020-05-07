@@ -23,7 +23,7 @@ class Competitions(commands.Cog):
     @commands.command(name="hackasat")
     async def hackasat_command(self, ctx):
 
-        event_time = datetime.datetime(year = 2020, month = 5, day = 23, hour = 10)
+        event_time = datetime.datetime(year = 2020, month = 5, day = 23, hour = 0)
 
         msg = self.get_time_diff(event_time, "until launch!")
 
@@ -32,7 +32,7 @@ class Competitions(commands.Cog):
     @commands.command(name="sharkyctf")
     async def sharky_command(self, ctx):
 
-        event_time = datetime.datetime(year = 2020, month = 5, day = 9, hour = 10)
+        event_time = datetime.datetime(year = 2020, month = 5, day = 9, hour = 0)
 
         msg = self.get_time_diff(event_time, "until we need a bigger boat...")
         

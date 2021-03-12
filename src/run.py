@@ -5,38 +5,35 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
+# Get environment variables
 load_dotenv()
-
 API_KEY = os.getenv('DISCORD_TOKEN')
 SERVER_NAME = os.getenv('DISCORD_GUILD')
 
+# List of modules
+initial_modules = ['meta', 'courses']
 
-mrRobot = commands.Bot(
+bot = commands.Bot(
 	command_prefix='!',
-	activity=discord.Game(name="Commands: !help"),
+	activity=discord.Game(name="!help"),
+        help_command=None
 )
 
-@mrRobot.event
+@bot.event
 async def on_ready():
+        print(
+            f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
+        print('Use this link to invite {}:'.format(bot.user.name))
+        print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(bot.user.id))
 
-	guild = mrRobot.guilds[0]
-	memberCount = len(guild.members)
-	onlineMemberCount = len([mem for mem in guild.members if mem.status == discord.Status.online])
+# Load modules listed in initial_modules
+if __name__ == '__main__':
+    for module in initial_modules:
+        try:
+            bot.load_extension(f"commands.{module}")
+        except Exception as e:
+            exc = '{}: {}'.format(type(e).__name__, e)
+            print('Failed to load module {}\n{}'.format(module, exc))
 
-	print(f'{mrRobot.user} is connected to: {guild.name}')
-	print(f'There are {onlineMemberCount} of {memberCount} people online!')
-
-	modules = [
-		"admin",
-		"crypto",
-		"quotes",
-		"courses",
-		"meta",
-		"competitions"
-	]
-
-	for mod in modules:
-		mrRobot.load_extension(f"commands.{mod}")
-
-
-mrRobot.run(API_KEY)
+# Runs and automatically reconnects if connection is aborted.
+bot.run(API_KEY, reconnect="True")

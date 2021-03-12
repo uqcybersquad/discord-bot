@@ -1,6 +1,9 @@
 src/.env
 src/.env.txt
 src/__pycache__
+src/webscrape_cache.sqlite
+src/commands/__pycache__/
 src/botd.sh
 commands/__pycache__
 commands/__pycache__/
+src/commands/webscrape_cache.sqlite

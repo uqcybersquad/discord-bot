@@ -2,26 +2,16 @@
 
 List features you want implemented below. Or, you know... add them yourself (see contributing)
 
-1. Welcome message
+1. Auto role
 2. Upcoming events
 
 Fun Stuff
-
 1. Mr Robot quote generator
 2. Channel statistics
     - Online ppl
     - Messages sent
     - 
 3. Ping command
-4. Course info command
-
-===============================Course Info===============================
-
-!course [course_name]
-
-Course Name
-[Brief Intro]
-[Link to course info]
 
 =========================================================================================================
 
@@ -29,6 +19,7 @@ Course Name
 Completed
 - Base64 encode/decode
 - rotn/rot13 encode/decode
+- Course info
 
 
 =========================================================================================================

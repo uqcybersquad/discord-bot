@@ -1,7 +1,17 @@
+import os
 import discord
-from discord.ext import commands
+import messages
 
-GITHUB_LINK = "https://github.com/uqcybersquad/discord-bot"
+from discord.ext import commands
+from dotenv import load_dotenv
+
+
+load_dotenv()
+GITHUB_LINK = os.getenv('GITHUB')
+RATE_COOLDOWN = os.getenv('RATE_COOLDOWN')
+
+# Doing it this way to allow future modifications
+msg = messages.Messages()
 
 """
 Meta commands such as statistics, bot info, etc.
@@ -11,31 +21,45 @@ class Meta(commands.Cog):
     def __init__(self, bot):
         self._bot = bot
 
-    """
-    Send developers link to github channel
-    """
+    @staticmethod
+    def create_help(msg):
+        """
+        Generates the general help embed
+        params: messages object (messages.json)
+        returns: help menu embedded
+        """
+        embed = discord.Embed(title=msg.help_title,
+                              description=msg.help_description,
+                              color = discord.Colour.purple())
+        embed.add_field(name=msg.source, value=msg.github)
+        embed.set_footer(text=msg.help_footer)
+        return embed
+
     @commands.command(name="link")
     async def get_github_link(self, ctx):
+        """
+        Send github channel to developers.
+        params: message context object
+        """
         await ctx.send(GITHUB_LINK)
 
-    """
-    Get interesting discord stats and send to channel
-    TODO: WIP
-    """
-    @commands.command(name="stats")
-    async def get_discord_stats(self, ctx):
-        msg = ""
-        
-        guild = self._bot.guilds[0]
+    @commands.command(name="help")
+    @commands.cooldown(1, RATE_COOLDOWN, commands.BucketType.user)
+    async def get_help(self, ctx):
+        """
+        Sends general/specific manual for commands.
+        params: context object (discord message)
+        """
+        command = ctx.message.content.split()
 
-        memberCount = len(guild.members)
-        onlineMemberCount = len([mem for mem in guild.members if mem.status == discord.Status.online])
-        
-        msg += f"<:hellothere:679599404818235393>There are {onlineMemberCount} of {memberCount} people online!" 
+        # default help
+        if len(command) == 1:
+            embed = Meta.create_help(msg)
+            await ctx.channel.send(embed=embed)
 
-        await ctx.send(msg)
-        
+        # command specific help
+        # WIP
 
 
 def setup(bot):
-	bot.add_cog(Meta(bot))
+        bot.add_cog(Meta(bot))

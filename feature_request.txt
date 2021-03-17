@@ -2,24 +2,24 @@
 
 List features you want implemented below. Or, you know... add them yourself (see contributing)
 
-1. Auto role
-2. Upcoming events
+1. Board feature
+
+---
 
 Fun Stuff
 1. Mr Robot quote generator
 2. Channel statistics
     - Online ppl
     - Messages sent
-    - 
 3. Ping command
 
-=========================================================================================================
-
+---
 
 Completed
-- Base64 encode/decode
-- rotn/rot13 encode/decode
+- ~~Base64 encode/decode~~
++ ~~rotn/rot13 encode/decode~~
 - Course info
++ Autorole
+- Events Scheduler
 
-
-=========================================================================================================
+---

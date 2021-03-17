@@ -24,20 +24,19 @@ class Messages:
                 '''
                 Automatically decrypts a specified string without knowing
                 the key or cipher.
+
+                WORK IN PROGRESS
                 '''
             ],
             'remind': [
                 '!remind <time> | <event time> | <event details>',
                 '''
                 Sets a reminder in the message channel which notifies
-                users who reacted to the message when the coutndown goes to 0.
-                The clock is updated every minute.
+                interested users who reacted to the message when the
+                coutndown timer reaches 0.
 
+                The time remaining is updated every minute.
                 Time is based off [dateparser](https://dateparser.readthedocs.io/en/latest/) format.
-
-                Limitation: Reminder will stop working once bot is restarted.
-                This is due to how the scheduler is set up and will be fixed
-                in a later update.
 
                 Admin/Moderators privileges required.
                 '''

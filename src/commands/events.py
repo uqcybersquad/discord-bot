@@ -40,13 +40,12 @@ class Reminder:
             days    = divmod(time_length, 86400)
             hours   = divmod(days[1], 3600)
             minutes = divmod(hours[1], 60)
-            seconds = divmod(minutes[1], 1)
 
             embed = discord.Embed(title=self.title,
                                   description=self.info,
                                   color= discord.Colour.purple())
             time_remaining = (f'{int(days[0])} days, {int(hours[0])} hours,'
-                            f' {int(minutes[0])} minutes, {int(seconds[0])} seconds')
+                            f' {int(minutes[0])} minutes')
             embed.add_field(name='Event Time/Date',
                             value=self.sched_time.strftime('%c'))
             embed.add_field(name='Time remaining', value=time_remaining)
@@ -70,16 +69,15 @@ class Reminder:
                 await self.ctx.send(f'{self.title} has started! {users}')
                 self.update_reminder.cancel()
 
-    @tasks.loop(seconds=30.0)
+    @tasks.loop(minutes=1.0)
     async def update_reminder(self):
         # Calculate the remaining time 
         time_length = (self.sched_time - datetime.datetime.now()).total_seconds()
         days    = divmod(time_length, 86400)
         hours   = divmod(days[1], 3600)
         minutes = divmod(hours[1], 60)
-        seconds = divmod(minutes[1], 1)
         time_remaining = (f'{int(days[0])} days, {int(hours[0])} hours,'
-                        f' {int(minutes[0])} minutes, {int(seconds[0])} seconds')
+                        f' {int(minutes[0])} minutes')
 
         # Update time remaining field
         message = await self.bot.get_channel(self.reminder.channel.id).fetch_message(self.reminder.id)

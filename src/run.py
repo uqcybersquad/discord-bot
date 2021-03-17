@@ -11,7 +11,7 @@ API_KEY = os.getenv('DISCORD_TOKEN')
 SERVER_NAME = os.getenv('DISCORD_GUILD')
 
 # List of modules
-initial_modules = ['meta', 'courses', 'events']
+initial_modules = ['meta', 'courses', 'events', 'board']
 
 bot = commands.Bot(
 	command_prefix='!',

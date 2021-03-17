@@ -27,13 +27,15 @@ class Messages:
                 '''
             ],
             'remind': [
-                '!remind <time> | <event>',
+                '!remind <time> | <event time> | <event details>',
                 '''
                 Sets a reminder in the message channel which notifies
                 users who reacted to the message when the coutndown goes to 0.
                 The clock is updated every minute.
 
-                Bug: Reminder will stop working once bot is restarted.
+                Time is based off [dateparser](https://dateparser.readthedocs.io/en/latest/) format.
+
+                Limitation: Reminder will stop working once bot is restarted.
                 This is due to how the scheduler is set up and will be fixed
                 in a later update.
 
@@ -50,7 +52,7 @@ class Messages:
                 `!course <course code>`
                 Gets UQ course information based on course code.
 
-                `!remind <time> | <event>`
+                `!remind <time> | <event name> | <event info>`
                 Sets a reminder for an event.
 
 		`!help <command>`

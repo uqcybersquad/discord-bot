@@ -1,8 +1,7 @@
 import discord
 import messages
 
-from discord.ext import commands
-
+from discord.ext import tasks, commands
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 import datetime
@@ -10,17 +9,23 @@ import dateparser
 
 sched = AsyncIOScheduler()
 sched.start()
+
 msg =  messages.Messages()
+react_emoji = '<:hacking:681070378516611097>'
 
 class Reminder:
     """
     A reminder object scheduled to ping all users who reacted to the reminder.
     """
-    def __init__(self, sched_time, ctx, msg: str):
-        self.sched_time = sched_time
+    def __init__(self, bot, ctx, sched_time, title: str, info: str):
+        self.bot = bot
         self.ctx = ctx
-        self.msg = msg
+        self.sched_time = sched_time
+        self.title = title
+        self.info = info
         self.current = datetime.datetime.now()
+        self.reminder = None
+        sched.add_job(self.send_reminder, 'date', run_date=sched_time)
 
     async def set_reminder(self):
         """
@@ -37,22 +42,50 @@ class Reminder:
             minutes = divmod(hours[1], 60)
             seconds = divmod(minutes[1], 1)
 
-            embed = discord.Embed(title='Upcoming Event',
-                                  description=self.msg,
+            embed = discord.Embed(title=self.title,
+                                  description=self.info,
                                   color= discord.Colour.purple())
             time_remaining = (f'{int(days[0])} days, {int(hours[0])} hours,'
                             f' {int(minutes[0])} minutes, {int(seconds[0])} seconds')
+            embed.add_field(name='Event Time/Date',
+                            value=self.sched_time.strftime('%c'))
             embed.add_field(name='Time remaining', value=time_remaining)
             embed.set_footer(text='React to this message to get notified when the event starts!')
-            reminder = await self.ctx.send(embed=embed)
-            hacking = '<:hacking:681070378516611097>'
-            await reminder.add_reaction(hacking)
+            self.reminder = await self.ctx.send(embed=embed)
+            await self.reminder.add_reaction(react_emoji)
+            self.update_reminder.start()
 
     async def send_reminder(self):
         """
-
+        Notifies all users and deletes the reminder once the
+        countdown reaches zero.
         """
-        print('remind')
+        # Get cached message for reactions iteration
+        # Wonky API causes wonky code
+        message = await self.bot.get_channel(self.reminder.channel.id).fetch_message(self.reminder.id)
+        for reaction in message.reactions:
+            if (str(reaction.emoji) == react_emoji):
+                users = await reaction.users().flatten()
+                users = " ".join([user.mention for user in users if not user.bot])
+                await self.ctx.send(f'{self.title} has started! {users}')
+                self.update_reminder.cancel()
+
+    @tasks.loop(seconds=30.0)
+    async def update_reminder(self):
+        # Calculate the remaining time 
+        time_length = (self.sched_time - datetime.datetime.now()).total_seconds()
+        days    = divmod(time_length, 86400)
+        hours   = divmod(days[1], 3600)
+        minutes = divmod(hours[1], 60)
+        seconds = divmod(minutes[1], 1)
+        time_remaining = (f'{int(days[0])} days, {int(hours[0])} hours,'
+                        f' {int(minutes[0])} minutes, {int(seconds[0])} seconds')
+
+        # Update time remaining field
+        message = await self.bot.get_channel(self.reminder.channel.id).fetch_message(self.reminder.id)
+        embed = message.embeds[0]
+        embed.set_field_at(1, name='Time remaining', value=time_remaining)
+        await message.edit(embed=embed)
 
 
 class Events(commands.Cog):
@@ -68,20 +101,20 @@ class Events(commands.Cog):
     async def add_event(self, ctx):
         """
         Adds a new event
-        Command format: '!event [time]|[event]'
+        Command format: '!event [time]|[event name]|[event_info]'
         """
         await ctx.message.delete()
         args = ctx.message.content.split()
         args = " ".join(args[1:])
-        time, event = args.split('|')
-        print(f'Time: {time}')
-        print(f'Event: {event}')
+        time, event, event_info = args.split('|')
 
         parsed_time = dateparser.parse(time)
+        print(f'Parsed Time: {parsed_time}')
+        print(f'Current Time: {datetime.datetime.now()}')
         if parsed_time is None or event is None:
             await ctx.send(msg.err_parse)
         else:
-            reminder = Reminder(parsed_time, ctx, event)
+            reminder = Reminder(self.bot, ctx, parsed_time, event, event_info)
             await reminder.set_reminder()
 
 

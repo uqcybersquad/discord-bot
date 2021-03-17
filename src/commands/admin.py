@@ -3,17 +3,17 @@ from discord.ext import commands
 
 class Admin(commands.Cog):
     def __init__(self, bot):
-	    self.bot = bot
+        self.bot = bot
 
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def load(self, ctx, extension):
-	    self.bot.load_extension(f'commands.{extension}')
+        self.bot.load_extension(f'commands.{extension}')
 
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def unload(self, ctx, extension):
-	    self.bot.unload_extension(f'commands.{extension}')
+        self.bot.unload_extension(f'commands.{extension}')
 
     @commands.command(hidden=True)
     @commands.has_permissions(kick_members=True)

@@ -36,6 +36,7 @@ class Meta(commands.Cog):
         return embed
 
     @commands.command(name="link")
+    @commands.cooldown(1, RATE_COOLDOWN, commands.BucketType.user)
     async def get_github_link(self, ctx):
         """
         Send github channel to developers.
@@ -52,13 +53,19 @@ class Meta(commands.Cog):
         """
         command = ctx.message.content.split()
 
-        # default help
         if len(command) == 1:
+            # general help
             embed = Meta.create_help(msg)
             await ctx.channel.send(embed=embed)
-
-        # command specific help
-        # WIP
+        elif len(command) == 2:
+            # command specific help
+            help_command = msg.help_commands[command[1]]
+            embed = discord.Embed(title=f'`{help_command[0]}`',
+                                 description=help_command[1],
+                                 colour=discord.Colour.purple())
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(msg.err_parse)
 
 
 def setup(bot):

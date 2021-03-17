@@ -11,7 +11,7 @@ API_KEY = os.getenv('DISCORD_TOKEN')
 SERVER_NAME = os.getenv('DISCORD_GUILD')
 
 # List of modules
-initial_modules = ['meta', 'courses']
+initial_modules = ['meta', 'courses', 'events']
 
 bot = commands.Bot(
 	command_prefix='!',
@@ -25,6 +25,19 @@ async def on_ready():
             f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
         print('Use this link to invite {}:'.format(bot.user.name))
         print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(bot.user.id))
+
+# Embedded Message
+def embed(title, desc, color):
+    color = discord.Color(int(color, 16))
+    embed = discord.Embed(title=title, color=color)
+    embed.description = desc
+    return embed
+
+@bot.command(name='embed')
+async def embedmsg(ctx, title, msg, color):
+    await ctx.message.delete()
+    embed_msg = embed(title, msg, color)
+    await ctx.message.channel.send(embed=embed_msg)
 
 # Load modules listed in initial_modules
 if __name__ == '__main__':

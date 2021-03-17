@@ -55,7 +55,6 @@ class Courses(commands.Cog):
         embed = discord.Embed(title=course.title,
                               description=course.summary,
                               color = discord.Colour.purple())
-        embed.add_field(name='Level', value=course.level)
         embed.add_field(name='Prerequisites', value=course.prereq)
         embed.add_field(name='Recommended', value=course.rec_preq)
         embed.add_field(name='Assessment', value=course.assessment)

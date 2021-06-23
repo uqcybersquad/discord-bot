@@ -67,6 +67,11 @@ class Meta(commands.Cog):
         else:
             await ctx.send(msg.err_parse)
 
+    @commands.command(name="clear")
+    @commands.has_permissions(administrator=True)
+    async def clear(self, ctx, amount=5):
+        await ctx.channel.purge(limit=amount+1)
+
 
 def setup(bot):
         bot.add_cog(Meta(bot))

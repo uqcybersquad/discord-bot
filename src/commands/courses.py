@@ -62,7 +62,6 @@ class Courses(commands.Cog):
         embed.set_footer(text=f'Coordinator: {course.coordinator}')
         return embed
 
-
     @commands.command(name="course")
     @commands.cooldown(1, RATE_COOLDOWN, commands.BucketType.user)
     async def get_course(self, ctx, course_code : str):

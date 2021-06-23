@@ -5,13 +5,19 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
+import requests
+import requests_cache
+
 # Get environment variables
 load_dotenv()
 API_KEY = os.getenv('DISCORD_TOKEN')
 SERVER_NAME = os.getenv('DISCORD_GUILD')
 
 # List of modules
-initial_modules = ['meta', 'courses', 'events', 'board']
+initial_modules = ['meta', 'courses', 'events', 'board', 'ctf']
+
+# Monkey patch requests for caching
+requests_cache.install_cache('api_cache',expire_after=86400)
 
 bot = commands.Bot(
 	command_prefix='!',

@@ -1,10 +1,13 @@
 import requests
-import requests_cache
 from bs4 import BeautifulSoup
 
 class UQScraper:
     """
     Scrapes course data from my.uq.edu website.
+
+    Removed caching since monkey patching was done
+    on run.py
+
     params: course code ex: COMP3320
     """
     def __init__(self, course_code: str):
@@ -14,10 +17,6 @@ class UQScraper:
         }
 
         self.url = "http://my.uq.edu.au/programs-courses/course.html?course_code={}".format(course_code)
-
-        # Request caching to avoid DOS-like attack to UQ servers
-        # Cache expires after 3 days
-        requests_cache.install_cache('webscrape_cache',expire_after=259200)
         r = requests.get(self.url, headers=headers)
         self.soup = BeautifulSoup(r.content, 'html.parser')
 

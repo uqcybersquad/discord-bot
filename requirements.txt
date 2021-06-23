@@ -68,7 +68,7 @@ pycparser==2.20
 pycryptodome==3.9.8
 pyelftools==0.27
 pyflakes==2.3.0
-Pygments==2.7.1
+Pygments==2.7.4
 pylint==2.6.0
 PyNaCl==1.4.0
 pynvim==0.4.2

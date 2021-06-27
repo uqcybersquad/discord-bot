@@ -103,5 +103,31 @@ class CTF(commands.Cog):
                 await message.delete()
                 break
 
+    @commands.command(name="register")
+    @commands.cooldown(1, RATE_COOLDOWN, commands.BucketType.user)
+    async def create_ctf_lobby(self, ctx, *args):
+        """
+        Creates a new category, channel, and a new role
+        for an upcoming CTF.
+        """
+        ctf_name = " ".join(args)
+        guild = ctx.guild
+        role = await guild.create_role(name=ctf_name, reason="CTF Regisstration")
+        category = await guild.create_category(name=ctf_name, reason='CTF Registration',
+                                    position=2)
+
+        # Creates read/write perms for new role only
+        role_perms = category.overwrites_for(role)
+        role_perms.read_messages = True
+        role_perms.send_messages = True
+        guest_perms = category.overwrites_for(ctx.guild.default_role)
+        guest_perms.read_messages = False
+
+        await category.set_permissions(role, overwrite=role_perms)
+        await category.set_permissions(ctx.guild.default_role, overwrite=guest_perms)
+        channel = await category.create_text_channel(ctf_name, reason='CTF Registration')
+        return channel
+
+
 def setup(bot):
 	bot.add_cog(CTF(bot))

@@ -9,7 +9,8 @@ from ciphey.iface import Config
 
 
 load_dotenv()
-RATE_COOLDOWN = os.getenv('RATE_COOLDOWN')
+RATE_COOLDOWN = os.getenv("RATE_COOLDOWN")
+
 
 class Encodings(commands.Cog):
     def __init__(self, bot):
@@ -46,7 +47,7 @@ class Encodings(commands.Cog):
                 await ctx.send(response)
     """
 
-    @commands.command(name='lolcrypto')
+    @commands.command(name="lolcrypto")
     @commands.cooldown(1, RATE_COOLDOWN, commands.BucketType.user)
     async def lolcrypto(self, ctx, enc_string: str):
         res = "hello"
@@ -54,4 +55,4 @@ class Encodings(commands.Cog):
 
 
 def setup(bot):
-	bot.add_cog(Encodings(bot))
+    bot.add_cog(Encodings(bot))

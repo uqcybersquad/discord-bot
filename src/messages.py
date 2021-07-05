@@ -40,6 +40,12 @@ class Messages:
 
                 Admin/Moderators privileges required.
                 '''
+            ],
+            'ctfs': [
+                '!ctfs'
+                '''
+                Displays a list of upcoming CTFs from ctftime.org
+                '''
             ]
         }
 
@@ -53,6 +59,8 @@ class Messages:
 
                 `!remind <time> | <event name> | <event info>`
                 Sets a reminder for an event.
+
+                '!ctfs'
 
 		`!help <command>`
 		Get command specific help. Available commands:

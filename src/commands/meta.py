@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-GITHUB_LINK = os.getenv('GITHUB')
-RATE_COOLDOWN = os.getenv('RATE_COOLDOWN')
+GITHUB_LINK = os.getenv("GITHUB")
+RATE_COOLDOWN = os.getenv("RATE_COOLDOWN")
 
 # Doing it this way to allow future modifications
 msg = messages.Messages()
@@ -16,8 +16,9 @@ msg = messages.Messages()
 """
 Meta commands such as statistics, bot info, etc.
 """
-class Meta(commands.Cog):
 
+
+class Meta(commands.Cog):
     def __init__(self, bot):
         self._bot = bot
 
@@ -28,9 +29,11 @@ class Meta(commands.Cog):
         params: messages object (messages.json)
         returns: help menu embedded
         """
-        embed = discord.Embed(title=msg.help_title,
-                              description=msg.help_description,
-                              color = discord.Colour.purple())
+        embed = discord.Embed(
+            title=msg.help_title,
+            description=msg.help_description,
+            color=discord.Colour.purple(),
+        )
         embed.add_field(name=msg.source, value=msg.github)
         embed.set_footer(text=msg.help_footer)
         return embed
@@ -60,9 +63,11 @@ class Meta(commands.Cog):
         elif len(command) == 2:
             # command specific help
             help_command = msg.help_commands[command[1]]
-            embed = discord.Embed(title=f'`{help_command[0]}`',
-                                 description=help_command[1],
-                                 colour=discord.Colour.purple())
+            embed = discord.Embed(
+                title=f"`{help_command[0]}`",
+                description=help_command[1],
+                colour=discord.Colour.purple(),
+            )
             await ctx.send(embed=embed)
         else:
             await ctx.send(msg.err_parse)
@@ -70,8 +75,8 @@ class Meta(commands.Cog):
     @commands.command(name="clear")
     @commands.has_permissions(administrator=True)
     async def clear(self, ctx, amount=5):
-        await ctx.channel.purge(limit=amount+1)
+        await ctx.channel.purge(limit=amount + 1)
 
 
 def setup(bot):
-        bot.add_cog(Meta(bot))
+    bot.add_cog(Meta(bot))

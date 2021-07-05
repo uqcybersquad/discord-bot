@@ -5,32 +5,36 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
-import requests
 import requests_cache
 
 # Get environment variables
 load_dotenv()
-API_KEY = os.getenv('DISCORD_TOKEN')
-SERVER_NAME = os.getenv('DISCORD_GUILD')
+API_KEY = os.getenv("DISCORD_TOKEN")
+SERVER_NAME = os.getenv("DISCORD_GUILD")
 
 # List of modules
-initial_modules = ['meta', 'courses', 'events', 'board', 'ctf']
+initial_modules = ["meta", "courses", "events", "board", "ctf"]
 
 # Monkey patch requests for caching
-requests_cache.install_cache('api_cache',expire_after=86400)
+requests_cache.install_cache("api_cache", expire_after=86400)
 
 bot = commands.Bot(
-	command_prefix='!',
-	activity=discord.Game(name="!help"),
-        help_command=None
+    command_prefix="!", activity=discord.Game(name="!help"), help_command=None
 )
+
 
 @bot.event
 async def on_ready():
-        print(
-            f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
-        print('Use this link to invite {}:'.format(bot.user.name))
-        print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(bot.user.id))
+    print(
+        f"\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n"
+    )
+    print("Use this link to invite {}:".format(bot.user.name))
+    print(
+        "https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8".format(
+            bot.user.id
+        )
+    )
+
 
 # Embedded Message
 def embed(title, desc, color):
@@ -39,20 +43,22 @@ def embed(title, desc, color):
     embed.description = desc
     return embed
 
-@bot.command(name='embed')
+
+@bot.command(name="embed")
 async def embedmsg(ctx, title, msg, color):
     await ctx.message.delete()
     embed_msg = embed(title, msg, color)
     await ctx.message.channel.send(embed=embed_msg)
 
+
 # Load modules listed in initial_modules
-if __name__ == '__main__':
+if __name__ == "__main__":
     for module in initial_modules:
         try:
             bot.load_extension(f"commands.{module}")
         except Exception as e:
-            exc = '{}: {}'.format(type(e).__name__, e)
-            print('Failed to load module {}\n{}'.format(module, exc))
+            exc = "{}: {}".format(type(e).__name__, e)
+            print("Failed to load module {}\n{}".format(module, exc))
 
 # Runs and automatically reconnects if connection is aborted.
 bot.run(API_KEY, reconnect="True")
